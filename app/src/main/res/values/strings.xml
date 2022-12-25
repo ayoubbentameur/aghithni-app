@@ -1,3 +1,64 @@
 <resources>
-    <string name="app_name">aghithni</string>
+
+    <string name="web_client_id" translatable="false">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</string>
+        <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+        <string name="facebook_application_id" translatable="false">1130551477828008</string>
+        <string name="facebook_login_protocol_scheme" translatable="false">fb1130551477828008</string>
+    <string name="facebook_client_token" translatable="false">00e90b9811bfcbab8eaadb441f4948e5</string>
+
+    <!-- THIS PART IS INTRO_ACTIVITY STRINGS -->
+    <string name="app_name">Aghithni</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="App_Description">An application to donate and search for blood and medicine.</string>
+
+    <!-- THIS PART IS CHOOSE_ACTIVITY STRINGS -->
+    <string name="choose">Do you want to donate or looking for:</string>
+    <string name="blood">Blood</string>
+    <string name="medicine">Medicine</string>
+
+    <!-- THIS PART IS BOTTOM_NAV_BAR Strings -->
+    <string name="home_title">Home</string>
+    <string name="ChatList_title">Chat</string>
+    <string name="Profile_title">Profile</string>
+    <string name="Menu_title">Menu</string>
+    <string name="hello_blank_fragment">blank fragment</string>
+
+    <!--THIS PART IS PROFILE_ACTIVITY STRINGS-->
+    <string name="FullName">Full Name</string>
+    <string name="toast_login">"You Don't Have an Account yet."</string>
+    <string name="dialog_message">You need to sign in to show your Personal Data.</string>
+    <string name="username">username</string>
+    <string name="signin">Sign in</string>
+
+    <!--THIS PART IS SIGNIN_ACTIVITY STRINGS-->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or_connect_with">Or connect with:</string>
+    <string name="login">Log in</string>
+    <string name="dont_have_accnt">Don\'t have an account \n Sign Up Here</string>
+
+
+    <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
+    <string name="entr_ur_fllname">Enter your full name</string>
+    <string name="entr_ur_usrname">Enter your username</string>
+    <string name="cnfrm_psswd">Confirm password</string>
+    <string name="gndr">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="signun">Sign un</string>
+    <string name="alrddy_hv_accnt_signin">Already have an account.\nLogin Here</string>
+
+
+    <!--THIS PART IS SETTING_FRAGMENT STRINGS-->
+    <string name="settings_title">Settings</string>
+    <string name="edit_prsnl_data">Edit personal Data</string>
+    <string name="signout">Sign out</string>
+    <string name="notifications">Notifications</string>
+    <string name="Languages">Languages</string>
+    <string name="change_Languages">Change Language</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="change_psswd">Change Password</string>
+    <string name="save">Save</string>
+
 </resources>

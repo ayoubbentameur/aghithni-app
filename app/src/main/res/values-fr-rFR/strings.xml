@@ -1,0 +1,59 @@
+<resources>
+
+    <!-- THIS PART IS INTRO_ACTIVITY STRINGS -->
+    <string name="app_name">Aghithni</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="App_Description">Une application pour faire un don et rechercher du sang et des médicaments</string>
+
+
+    <!-- THIS PART IS CHOOSE_ACTIVITY STRINGS -->
+    <string name="choose">Vous souhaitez faire un don ou recherchez :</string>
+    <string name="blood">Sang</string>
+    <string name="medicine">Médecine</string>
+
+
+    <!-- THIS PART IS BOTTOM_NAV_BAR Strings -->
+    <string name="home_title">Accueil</string>
+    <string name="ChatList_title">Discussion</string>
+    <string name="Profile_title">Profil</string>
+    <string name="Menu_title">Menu</string>
+    <string name="hello_blank_fragment">fragment vierge</string>
+
+    <!--THIS PART IS PROFILE_ACTIVITY STRINGS-->
+
+    <string name="FullName">Nom et prénom</string>
+    <string name="toast_login">"Vous n'avez pas encore de compte."</string>
+    <string name="dialog_message">Vous devez vous connecter pour afficher vos données personnelles.</string>
+    <string name="username">username</string>
+    <string name="signin">connecter</string>
+
+    <!--THIS PART IS SIGNIN_ACTIVITY STRINGS-->
+    <string name="email">E-mail</string>
+    <string name="password">mot de passe</string>
+    <string name="forgot_password">mot de passe oublié ?</string>
+    <string name="or_connect_with">ou connectez-vous avec:</string>
+    <string name="login">Connexion</string>
+    <string name="dont_have_accnt">Vous n\'avez pas de compte \n inscrivez-vous ici</string>
+
+    <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
+    <string name="entr_ur_fllname">Entrez votre nom et prénom</string>
+    <string name="entr_ur_usrname">Entrez votre nom d\'utilisateur</string>
+    <string name="cnfrm_psswd">Confirmez le mot de passe</string>
+    <string name="gndr">Le genre:</string>
+    <string name="male">Mâle</string>
+    <string name="female">Femelle</string>
+    <string name="signun">inscrire</string>
+    <string name="alrddy_hv_accnt_signin">Vous avez déjà un compte.\nConnexion ici</string>
+
+
+    <string name="settings_title">Paramétres</string>
+    <string name="edit_prsnl_data">Modifier les données personnelles</string>
+    <string name="notifications">Notifications</string>
+    <string name="Languages">les langues</string>
+    <string name="change_Languages">Changer la langue</string>
+    <string name="signout">Déconnexion</string>
+    <string name="dark_mode">Mode Sombre</string>
+    <string name="change_psswd">Changer le mot de passe</string>
+    <string name="save">Sauvegarder</string>
+
+</resources>

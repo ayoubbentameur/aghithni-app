@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/abeezee</item>
+        <item>@font/alata</item>
         <item>@font/baloo_paaji_2</item>
+        <item>@font/inter_medium</item>
         <item>@font/lateef</item>
         <item>@font/tajawal_medium</item>
     </array>

@@ -1,0 +1,59 @@
+<resources>
+    <!-- THIS PART IS INTRO_ACTIVITY STRINGS -->
+    <string name="app_name">أغثني</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="App_Description">تطبيق للتبرع و البحث عن الدم و الدواء</string>
+
+
+    <!-- THIS PART IS CHOOSE_ACTIVITY STRINGS -->
+    <string name="choose">تريد التبرع أو البحث عن:</string>
+    <string name="blood">دم</string>
+    <string name="medicine">دواء</string>
+
+
+    <!-- THIS PART IS BOTTOM_NAV_BAR Strings -->
+    <string name="home_title">الصفحة الرئيسية</string>
+    <string name="ChatList_title">الرسائل</string>
+    <string name="Profile_title">الملف الشخصي</string>
+    <string name="Menu_title">القائمة</string>
+    <string name="hello_blank_fragment">جزء فارغ</string>
+
+    <!--THIS PART IS PROFILE_ACTIVITY STRINGS-->
+
+    <string name="FullName">الإسم واللقب</string>
+    <string name="toast_login">"لا تملك حسابا حتى الآن."</string>
+    <string name="dialog_message">يجب عليك تسجيل الدخول لعرض بياناتك الشخصية.</string>
+    <string name="username">اسم االمستخدم</string>
+    <string name="signin">تسجيل الدخول</string>
+
+    <!--THIS PART IS SIGNIN_ACTIVITY STRINGS-->
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة السر</string>
+    <string name="forgot_password">هل نسيت كلمة السر؟</string>
+    <string name="or_connect_with">أو سجل الدخول باستخدام:</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="dont_have_accnt">ليس لديك حساب \n سجل هنا</string>
+
+    <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
+    <string name="entr_ur_fllname">أدخل اسمك بالكامل</string>
+    <string name="entr_ur_usrname">أدخل اسم المستخدم</string>
+    <string name="cnfrm_psswd">تأكيد كلمة السر</string>
+    <string name="gndr">الجنس:</string>
+    <string name="male">ذكر</string>
+    <string name="female">أنثى</string>
+    <string name="signun">تسجيل الدخول</string>
+    <string name="alrddy_hv_accnt_signin">لديك حساب من قبل\n سجل الدخول هنا. </string>
+
+
+    <string name="settings_title">الإعدادات</string>
+    <string name="edit_prsnl_data">تغيير البيانات الشخصية</string>
+    <string name="notifications">الإشعار</string>
+    <string name="Languages">اللغات</string>
+    <string name="change_Languages">تغيير اللغة</string>
+    <string name="signout">تسجيل الخروج</string>
+    <string name="dark_mode">الوضع المظلم</string>
+    <string name="change_psswd">تغيير كلمة السر</string>
+    <string name="save">حفظ</string>
+
+
+</resources>

@@ -21,7 +21,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
+
+    /*
+    Secure Password requirements
+Password must contain at least one digit [0-9].
+Password must contain at least one lowercase Latin character [a-z].
+Password must contain at least one uppercase Latin character [A-Z].
+Password must contain a length of at least 8 characters and a maximum of 20 characters.
+     */
+
+    private static final String PASSWORD_PATTERN="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$";
 
     private EditText edit_txt_Fullname, edit_txt_Username, edit_txt_Email, edit_txt_Pass, edit_txt_CoPass;
     private RadioButton radioMale, radioFemale;
@@ -50,7 +64,8 @@ public class SignUpActivity extends AppCompatActivity {
         text_view_login = findViewById(R.id.text_view_login);
         button_register = findViewById(R.id.register_btn_id);
 
-        //        Get Firebase auth instance
+
+        //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("UserData");
@@ -83,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()) {
 
-                                        UserData data = new UserData(fullname, username, email, gender);
+                                        UserData data = new UserData(fullname, username, email, gender,password);
 
                                         FirebaseDatabase.getInstance().getReference("UserData")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).
@@ -95,14 +110,15 @@ public class SignUpActivity extends AppCompatActivity {
                                                         signUp_progress.setVisibility(View.GONE);
 
                                                         Toast.makeText(SignUpActivity.this, "Successful Registered", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                        Intent intent = new Intent(SignUpActivity.this, Choose.class);
                                                         startActivity(intent);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                         finish();
                                                     }
                                                 });
 
 
-                                    } else {
+                               } else {
                                         //    progressbar GONE
                                         signUp_progress.setVisibility(View.GONE);
                                         Toast.makeText(SignUpActivity.this, "Check Email id or Password", Toast.LENGTH_SHORT).show();
@@ -150,19 +166,30 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validatePassword() {
+        //The trim() method removes whitespace from both ends of a string.
         password = edit_txt_Pass.getText().toString().trim();
-        co_password = edit_txt_CoPass.getText().toString().toLowerCase();
-
+        co_password = edit_txt_CoPass.getText().toString();
+            Pattern pattern_passwd=Pattern.compile(PASSWORD_PATTERN);
+            Matcher matcher_passwd=pattern_passwd.matcher(password);
+            boolean matchFound_psswd=matcher_passwd.find();
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(SignUpActivity.this, "Enter Your Password", Toast.LENGTH_SHORT).show();
             return false;
         } else if (TextUtils.isEmpty(co_password)) {
             Toast.makeText(SignUpActivity.this, "Enter Your Co-Password", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (password.length()<= 6) {
+        } else if (password.length() <= 8) {
             Toast.makeText(SignUpActivity.this, "Password is Very Short", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        } else if (password.length() >20){
+            Toast.makeText(SignUpActivity.this, "Password is Very Long you can't use more than 20 char", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (!matchFound_psswd){
+            Toast.makeText(SignUpActivity.this, "Password must contain:Numbers,UPPERCASE letter 'A-Z' and lowercase letter 'a-z'", Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+        else {
             return true;
         }
     }
@@ -191,9 +218,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
             startActivity(intent);
 
         }
     }
 }
+
+
+
