@@ -1,10 +1,15 @@
 package com.benayoub.aghithni;
 
 
+import static android.Manifest.permission.*;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.Manifest;
+import android.Manifest.permission;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,13 +17,16 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -30,10 +38,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.Profile;
@@ -47,12 +53,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,13 +65,15 @@ import java.io.InputStream;
 public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
     ImageView avatar;
     TextView fullName;
-    ProgressBar progressBar;
+    SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog;
 
 
-    private final int PICK_IMAGE_REQUEST = 1;
-    private final int PICK_CAMERA_REQUEST = 0;
+    private final int SELECT_PICTURE = 200;
+
 
     //making mContainer Public for reuse it in the checkSignin() method.
     View mContainer;
@@ -115,16 +120,35 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContainer = inflater.inflate(R.layout.fragment_profile, null);
+        swipeRefreshLayout = mContainer.findViewById(R.id.profile_frg_id);
+        avatar = mContainer.findViewById(R.id.avatar_pic_id);
+        fullName = mContainer.findViewById(R.id.full_name_txt_id);
         checkSignin();
-        updateUI();
+        downloadPic();
+        refresh();
+        checkPermission();
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+            }
+        });
+        if (currentUser != null) {
 
 
+            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://aghithni-38fd3.appspot.com/images/" + uid + ".jpeg");
 
+
+            getDownloadUrl(reference);
+            String name = currentUser.getDisplayName();
+            fullName.setText(name);
+        }
         return mContainer;
     }
 
@@ -151,6 +175,7 @@ public class ProfileFragment extends Fragment {
 
             final int i = 5;
             text.setId(i);
+
             text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -206,123 +231,137 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public void selectImage(Context context) {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Choose your profile picture");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
+    // this function is triggered when
+    // the Select Image Button is clicked
+    void imageChooser() {
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
 
-
-                if (options[item].equals("Take Photo")) {
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, PICK_CAMERA_REQUEST);
-
-
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, PICK_IMAGE_REQUEST);
-
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-
-
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
     }
 
-
-    @Override
+    // this function is triggered when user
+    // selects the image from the imageChooser
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case PICK_CAMERA_REQUEST:
 
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), selectedImage, MediaStore.Images.Media.TITLE, MediaStore.Images.Media.DESCRIPTION);
-                        avatar.setImageBitmap(selectedImage);
-                    }
-                    break;
-                case PICK_IMAGE_REQUEST:
-                    if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (resultCode == RESULT_OK) {
 
-                        InputStream stream;
-                        try {
-                            Toast.makeText(getContext(), "Image saved", Toast.LENGTH_SHORT).show();
-                            stream = getActivity().getContentResolver().openInputStream(data.getData());
-                            Bitmap realImage = BitmapFactory.decodeStream(stream);
-
-                            avatar.setImageBitmap(realImage);
-                            handleUpload(realImage);
-                        } catch (FileNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-                    break;
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == SELECT_PICTURE) {
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    avatar.setImageURI(selectedImageUri);
+                    upload();
+                }
             }
         }
     }
 
-    public static String encodeToBase64(Bitmap image) {
-        Bitmap immage = image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-        Log.d("Image Log:", imageEncoded);
-        return imageEncoded;
-    }
+    private void upload() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
 
-    public static Bitmap decodeToBase64(String input) {
-        byte[] decodedByte = Base64.decode(input, 0);
+        StorageReference storageRef = storage.getReference();
+        String uid = mAuth.getUid();
+        String path = "images/" + uid + ".jpeg";
+// Create a reference to "mountains.jpg"
+        StorageReference mountainsRef = storageRef.child(path);
 
-        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
-    }
-
-    private void handleUpload(Bitmap bitmap) {
-
+        // Get the data from an ImageView as bytes
+        avatar.setDrawingCacheEnabled(true);
+        avatar.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) avatar.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data=baos.toByteArray();
+        byte[] data = baos.toByteArray();
 
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                // mack progress bar dialog
 
+                progressDialog.setTitle("Uploading....");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                progressDialog.setMessage("upload " + (int) progress + "%");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed to upload picture", Toast.LENGTH_SHORT).show();
+            }
+        });
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getContext(), "Failed", Toast.LENGTH_LONG).show();
+                Uri photoUrl = currentUser.getPhotoUrl();
 
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        StorageReference reference = FirebaseStorage.getInstance().getReference()
-                .child("images")
-                .child(uid + ".jpeg");
+                avatar.setImageResource(R.drawable.user_pic);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                progressDialog.dismiss();
+               // Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_LONG).show();
+            }
+        });
 
-
-        reference.putBytes(data)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        getDownloadUrl(reference);
-                        Toast.makeText(getContext(),"Profile Pic Uploaded",Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure", e.getCause());
-                    }
-                });
     }
 
+    private void downloadPic() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+
+            if (user.getPhotoUrl() != null) {
+                for (UserInfo userInfo : user.getProviderData()) {
+                    if (userInfo.getProviderId().equals("facebook.com")) {
+                        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
+                        Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize, dimensionPixelSize);
+                        Glide.with(this).load(profilePictureUri)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(avatar);
+                    }
+                    if (userInfo.getProviderId().equals("google.com")) {
 
 
+                        mAuth = FirebaseAuth.getInstance();
+                        currentUser = mAuth.getCurrentUser();
+                        Glide.with(this).load(currentUser.getPhotoUrl()).into(avatar);
+
+
+                    } else if (user.getPhotoUrl() != null) {
+                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://aghithni-38fd3.appspot.com/images/" + uid + ".jpeg");
+                        Glide.with(this).load(reference)
+                                .placeholder(R.drawable.user_pic)
+                                .into(avatar);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
 
 
     private void getDownloadUrl(StorageReference reference) {
@@ -332,23 +371,28 @@ public class ProfileFragment extends Fragment {
                 Log.d(TAG, "onSuccess: " + uri);
                 setUserProfileUrl(uri);
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "Failed TO download URI" + e.getCause());
+            }
         });
     }
 
     private void setUserProfileUrl(Uri uri) {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(uri).build();
 
 
-        user.updateProfile(request)
+        currentUser.updateProfile(request)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(), "Profile image Updated.", Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getContext(), "Profile image Updated.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -358,66 +402,63 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+    }
+
+    private void refresh() {
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                FirebaseUser user = mAuth.getCurrentUser();
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://aghithni-38fd3.appspot.com/images/" + uid + ".jpeg");
+
+
+                getDownloadUrl(reference);
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
 
     }
 
-    private void updateUI() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-
-            // Assign variable
-            avatar = mContainer.findViewById(R.id.avatar_pic_id);
-            fullName = mContainer.findViewById(R.id.full_name_txt_id);
-
-            avatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectImage(getContext());
-
-                }
-            });
+    private void checkPermission() {
 
 
+        //use permission to READ_EXTERNAL_STORAGE For Device >= Marshmallow
 
-            setAvatar();
-            fullName.setText(user.getDisplayName());
-
+        String[] permissionsStorage = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        int requestExternalStorage = 1;
+        int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), permissionsStorage, requestExternalStorage);
         }
 
-    }
-     void setAvatar(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user!=null){
-                avatar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        selectImage(getContext());
-                    }
-                });
 
-                if (user.getPhotoUrl()!=null){
-                    for (UserInfo userInfo : user.getProviderData()) {
-                       if (userInfo.getProviderId().equals("facebook.com")) {
-                            int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-                            Uri profilePictureUri= Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize , dimensionPixelSize);
-                            Glide.with(this).load(profilePictureUri)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .into(avatar);
-                                                }
-                       else if (userInfo.getProviderId().equals("google.com")){
-                            Glide.with(this).load(user.getPhotoUrl()).into(avatar);
 
-                        }
+            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+            // app-defined int constant that should be quite unique
 
-                    }
-                }
             }
 
-    }
-}
 
 
+        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(),"permissionDenied", Toast.LENGTH_LONG).show();
 
+                // to ask user to reade external storage
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 444);
+
+            } else {
+imageChooser();
+            }
+
+            //implement code for device < Marshmallow
+        } else {
+
+            imageChooser();
+        }*/
+            }
 
