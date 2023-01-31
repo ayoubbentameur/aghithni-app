@@ -35,7 +35,8 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    SharedPreferences sharedPreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+
     FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     View mContainerSettings;
@@ -94,11 +95,18 @@ public class SettingsFragment extends Fragment {
 
         mContainerSettings = inflater.inflate(R.layout.fragment_settings, container, false);
 
-
+        SharedPreferences sharedPreferences=getActivity().getSharedPreferences("save",MODE_PRIVATE);
         setMode();
-        /*sharedPreferences = getActivity().getSharedPreferences("save", MODE_PRIVATE);
-        //darkmode.setChecked(sharedPreferences.getBoolean("value",true));
-        darkmode.setChecked(sharedPreferences.getBoolean("value", false));*/
+       Boolean theme=sharedPreferences.getBoolean("value",true);
+        if (theme){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
+        darkmode.setChecked(sharedPreferences.getBoolean("value",true));
+
+
         verify = mContainerSettings.findViewById(R.id.verify_id);
 
 
@@ -264,60 +272,37 @@ public class SettingsFragment extends Fragment {
 
 
  void setMode() {
-        darkmode = mContainerSettings.findViewById(R.id.darkModeSwitch);
+        darkmode=mContainerSettings.findViewById(R.id.darkModeSwitch);
 
 
-        darkmode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // When switch checked
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", true);
-                    editor.apply();
-                    darkmode.setChecked(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                  //  setDefaults("save",true,getContext());
 
-                } else {
-                    // When switch unchecked
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", false);
-                    editor.apply();
-                    darkmode.setChecked(false);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                   // setDefaults("save",false,getContext());
+     darkmode.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             if (darkmode.isChecked())
+             {
+                 // When switch checked
+                 SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
+                 editor.putBoolean("value",true);
+                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-                }
-            }
-        });
+                 editor.apply();
+                 darkmode.setChecked(true);
+             }
+             else
+             {
+                 // When switch unchecked
+                 SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
+                 editor.putBoolean("value",false);
+                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
-       sharedPreferences= getActivity().getSharedPreferences("save", MODE_PRIVATE);
-
-
-        darkmode.setChecked(sharedPreferences.getBoolean("value", true));
-
-        darkmode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (darkmode.isChecked()) {
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", true);
-                    editor.apply();
-                    darkmode.setChecked(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-                } else {
-                    // When switch unchecked
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("save", MODE_PRIVATE).edit();
-                    editor.putBoolean("value", false);
-                    editor.apply();
-                    darkmode.setChecked(false);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-            }
-        });
-    }
+                 editor.apply();
+                 darkmode.setChecked(false);
+             }
+         }
+     });
+          }
 }
 
 

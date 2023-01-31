@@ -18,13 +18,14 @@ SharedPreferences sharedPreferences;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences( this/* Activity context */);
-        boolean theme = sharedPreferences.getBoolean("save", false);
+        SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
+
+        Boolean theme=sharedPreferences.getBoolean("value",true);
         if (theme){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // implement here.
-        }else{
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // implement here.
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         }
 
         timer=new Timer();
