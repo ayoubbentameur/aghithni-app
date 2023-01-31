@@ -1,16 +1,206 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Aghithni" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Aghithni" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/bleu_dark</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+
+    </style>
+
+
+    <style name="LoginTheme" parent="FirebaseUI">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="colorControlActivated">@android:color/black</item>
+        <item name="colorControlHighlight">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+    <style name="FirebaseUI.TextInputLayout.EmailField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="startIconDrawable">@drawable/custom_mail_icon</item>
+        <item name="startIconContentDescription">@string/email</item>
+
+        <item name="android:hint">@string/email</item>
+        <item name="boxStrokeColor">@color/blue</item>
+        <item name="startIconTint">#FF018786</item>
+
+
+    </style>
+    <style name="FirebaseUI.TextInputEditText.EmailField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+
+
+    </style>
+
+    <style name="FirebaseUI.TextInputLayout.NameField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="startIconDrawable">@drawable/custom_person_icon</item>
+        <item name="startIconContentDescription">@string/email</item>
+
+        <item name="android:hint">@string/FullName</item>
+        <item name="boxStrokeColor">@color/blue</item>
+        <item name="startIconTint">#FF018786</item>
+
+
+    </style>
+    <style name="FirebaseUI.TextInputEditText.NameField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+
+    </style>
+
+    <style name="FirebaseUI.TextInputLayout.NewPasswordField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="startIconDrawable">@drawable/custom_password_icon</item>
+        <item name="startIconContentDescription">@string/password</item>
+
+        <item name="android:hint">@string/password</item>
+        <item name="boxStrokeColor">@color/blue</item>
+        <item name="startIconTint">#FF018786</item>
+
+
+    </style>
+
+
+
+
+    <style name="FirebaseUI.TextInputEditText.NewPasswordField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="FirebaseUI.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+        <item name="android:textColor">@android:color/white</item>
+
+        <item name="android:layout_gravity">right</item>
+
+
+        <item name="backgroundTint">#0F3460</item>
+        <item name="cornerRadius">8dp</item>
+
+
+
+    </style>
+
+
+
+    <style name="FirebaseUI.Button.AccountChooser.EmailButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_mail_white_24dp</item>
+
+        <item name="android:background">@color/fui_bgEmail</item>
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">10dp</item>
+        <item name="backgroundTint">@color/fui_bgEmail</item>
+
+
+    </style>
+
+    <style name="FirebaseUI.Button.AccountChooser.GoogleButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_googleg_color_24dp</item>
+
+        <item name="android:background">@color/fui_bgGoogle</item>
+        <item name="android:padding">10dp</item>
+
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
+
+    </style>
+
+
+    <style name="FirebaseUI.Button.AccountChooser.FacebookButton">
+        <item name="drawableStartCompat">@drawable/com_facebook_button_icon</item>
+
+        <item name="android:background">@color/com_facebook_blue</item>
+        <item name="android:padding">10dp</item>
+
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
+
+    </style>
+    <style name="FirebaseUI.Button.AccountChooser.PhoneButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_phone_white_24dp</item>
+
+        <item name="android:background">@color/fui_bgPhone</item>
+        <item name="android:padding">10dp</item>
+
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+
+
+
+
+
+
+
+
+    <!--styles for education app-->
+    <style name="viewParent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="viewParent.headerText">
+        <item name="android:textColor">@color/contentTextColor</item>
+        <item name="android:textSize">@dimen/headerTextSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="viewParent.headerText.settingsMiniTitle">
+        <item name="android:textColor">#5D5C5C</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="settingsText" parent="viewParent.headerText.settingsMiniTitle">
+        <item name="android:textColor">@color/miniTitle</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">20dp</item>
+    </style>
+    <style name="viewParent.headerText.settingsTextIcon" parent="settingsText">
+        <item name="android:drawableRight">@drawable/ic_more</item>
     </style>
 </resources>

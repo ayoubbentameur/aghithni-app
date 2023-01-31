@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@drawable/gradient_1"
+    android:background="@drawable/gradient3"
     tools:context=".Choose">
 
 
@@ -16,7 +15,7 @@
         android:fontFamily="@font/abeezee"
         android:gravity="center"
         android:text="@string/choose"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/CardView_blood_id"

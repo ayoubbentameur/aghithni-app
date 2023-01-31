@@ -1,9 +1,9 @@
 <resources>
 
     <string name="web_client_id" translatable="false">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</string>
-        <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-        <string name="facebook_application_id" translatable="false">1130551477828008</string>
-        <string name="facebook_login_protocol_scheme" translatable="false">fb1130551477828008</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">1130551477828008</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1130551477828008</string>
     <string name="facebook_client_token" translatable="false">00e90b9811bfcbab8eaadb441f4948e5</string>
 
     <!-- THIS PART IS INTRO_ACTIVITY STRINGS -->
@@ -39,6 +39,13 @@
     <string name="dont_have_accnt">Don\'t have an account \n Sign Up Here</string>
 
 
+    <!--THIS PART IS VERIFY_EMAIL_ACTIVITY STRINGS-->
+    <string name="verifyemail">Verify your email address</string>
+    <string name="verifyemail_txt">to start using Aghithni,we need to verify your email ID.</string>
+    <string name="verifyemail_spam_txt">Please check your spam or junk folder, if you are expecting a reply and can\'t find it in your inbox.Thank you.</string>
+    <string name="clicktoverify">Click to verify</string>
+
+
     <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
     <string name="entr_ur_fllname">Enter your full name</string>
     <string name="entr_ur_usrname">Enter your username</string>
@@ -59,6 +66,39 @@
     <string name="change_Languages">Change Language</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="change_psswd">Change Password</string>
+
+
+    <!--THIS PART IS EditData_ACTIVITY STRINGS-->
+    <string name="email_verified">email verified</string>
+    <string name="email_not_verified">email not verified</string>
+    <string name="delete_account">Delete Account</string>
     <string name="save">Save</string>
+
+
+    <!--THIS PART IS DELETE_ACCOUNT_DIALOG STRINGS-->
+    <string name="delete_account_msg">Are you sure you want to delete your account?
+If you delete your account, you will permanently
+lose your profile, messages, and photos.</string>
+    <string name="delete_account_msg_email_typing">Type your email to confirm</string>
+
+
+    <!--THIS PART IS REQUIRED_SIGNOUT_DIALOG STRINGS-->
+    <string name="required_sign_out">Requires sign out</string>
+    <string name="required_reconnect">This operation is sensitive and requires you to reconnect.</string>
+
+    <!--THIS PART IS RESSET_PASSWORD_ACTIVITY STRINGS-->
+    <string name="resset_psswd">Reset Password</string>
+    <string name="remember_psswd">Make sure you remember your password.</string>
+    <string name="current_psswd">Current Password</string>
+    <string name="forgot_psswd">forgot password?</string>
+    <string name="new_psswd">New Password</string>
+    <string name="confirm_psswd">Confirm Password</string>
+    <string name="update_psswd">Mettre à jour le mot de passe</string>
+    <string name="wrong_psswd">mot de passe incorrect</string>
+    <string name="psswd_not_match">les mots de passe ne correspondent pas</string>
+    <string name="english">English</string>
+    <string name="frensh">Frensh</string>
+    <string name="arabic">Arabic</string>
+
 
 </resources>

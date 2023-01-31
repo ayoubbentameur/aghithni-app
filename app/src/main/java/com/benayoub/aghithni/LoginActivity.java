@@ -41,32 +41,37 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity{
     List<AuthUI.IdpConfig> providers;
     Intent signInIntent;
-    TextView textView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                  new AuthUI.IdpConfig.FacebookBuilder().setPermissions(Arrays.asList("email", "public_profile"))
-.build(),
+.build(),        //new AuthUI.IdpConfig.PhoneBuilder().build(),
+
                 new AuthUI.IdpConfig.GoogleBuilder().build());
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             // already signed in
@@ -78,6 +83,7 @@ public class LoginActivity extends AppCompatActivity{
 // Create and launch sign-in intent
             signInIntent = AuthUI.getInstance()
                     .createSignInIntentBuilder()
+                    .setIsSmartLockEnabled(false)
                     .setAvailableProviders(providers)
                     .setLogo(R.drawable.pngtreedonate_blood_5395203)
                     .setTheme(R.style.LoginTheme)
@@ -88,6 +94,7 @@ public class LoginActivity extends AppCompatActivity{
 
 
         }
+
     }
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -122,124 +129,8 @@ public class LoginActivity extends AppCompatActivity{
         }
     }
 
+
 }
 
 
-
-
-
-    /*private FirebaseAuth mAuth;
-
-
-    TextView frgtPsswd;
-    private EditText txtemail, txtpassoword;
-    private Button login_btn;
-    private TextView text_view_signup;
-    ProgressBar login_progress;
-
-    String loginemail, loginpassword;
-
-
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_login);
-        frgtPsswd=findViewById(R.id.frgt_passwd_txt_id);
-
-        txtemail = findViewById(R.id.emailField1);
-        txtpassoword = findViewById(R.id.passwordField1);
-        login_progress = findViewById(R.id.signIp_progress);
-        text_view_signup = findViewById(R.id.text_view_signup);
-        login_btn = findViewById(R.id.login_btn_id);
-        mAuth = FirebaseAuth.getInstance();
-
-
-
-
-
-        //        handle login button
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!validateEmail() | !validatePassword()) {
-                    return;
-                }
-
-                //    progressbar VISIBLE
-                login_progress.setVisibility(View.VISIBLE);
-
-                mAuth.signInWithEmailAndPassword(loginemail, loginpassword).
-                        addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                //    progressbar GONE
-                                login_progress.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this, Choose.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_REQUIRE_DEFAULT);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-
-                                    //    progressbar GONE
-                                    login_progress.setVisibility(View.GONE);
-                                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                        });
-            }
-
-        });
-        frgtPsswd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ressetIntent=new Intent(LoginActivity.this,ResetPsswdActivity.class);
-                startActivity(ressetIntent);
-            }
-        });
-
-
-        text_view_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    private boolean validateEmail() {
-        loginemail = txtemail.getText().toString().trim();
-        if (TextUtils.isEmpty(loginemail)) {
-            Toast.makeText(LoginActivity.this, "Enter Your Email", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(loginemail).matches()) {
-            Toast.makeText(LoginActivity.this, "Please enter valid Email", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        loginpassword = txtpassoword.getText().toString().trim();
-
-        if (TextUtils.isEmpty(loginpassword)) {
-            Toast.makeText(LoginActivity.this, "Enter Your Password", Toast.LENGTH_SHORT).show();
-            return false;
-
-        } else {
-            return true;
-        }
-    }
-*/
 

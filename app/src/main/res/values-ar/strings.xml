@@ -34,6 +34,14 @@
     <string name="login">تسجيل الدخول</string>
     <string name="dont_have_accnt">ليس لديك حساب \n سجل هنا</string>
 
+
+    <!--THIS PART IS VERIFY_EMAIL_ACTIVITY STRINGS-->
+    <string name="verifyemail">تحقق من عنوان بريدك الإلكتروني</string>
+    <string name="verifyemail_txt">لبدء استخدام أغيثني ، نحتاج إلى التحقق من بريدك الإلكتروني.</string>
+    <string name="verifyemail_spam_txt">يرجى التحقق من مجلد البريد العشوائي أو غير المرغوب فيه ، إذا كنت تتوقع ردًا ولا يمكنك العثور عليه في صندوق الوارد الخاص بك ، شكرًا لك.</string>
+    <string name="clicktoverify">انقر للتحقق</string>
+
+
     <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
     <string name="entr_ur_fllname">أدخل اسمك بالكامل</string>
     <string name="entr_ur_usrname">أدخل اسم المستخدم</string>
@@ -53,7 +61,44 @@
     <string name="signout">تسجيل الخروج</string>
     <string name="dark_mode">الوضع المظلم</string>
     <string name="change_psswd">تغيير كلمة السر</string>
+
+
+    <!--THIS PART IS EditData_ACTIVITY STRINGS-->
+    <string name="email_verified">تم التحقق من البريد الإلكتروني</string>
+    <string name="email_not_verified">لم يتم التحقق من البريد الإلكتروني</string>
+    <string name="delete_account">حذف الحساب</string>
     <string name="save">حفظ</string>
 
+
+
+    <!--THIS PART IS DELETE_ACCOUNT_DIALOG STRINGS-->
+    <string name="delete_account_msg">هل أنت متأكد أنك تريد حذف حسابك؟
+ إذا قمت بحذف حسابك ، فسوف
+تفقد ملفك الشخصي ورسائلك وصورك.</string>
+    <string name="delete_account_msg_email_typing">أكتب بريدك الإلكتروني للتأكيد</string>
+
+
+
+
+    <!--THIS PART IS REQUIRED_SIGNOUT_DIALOG STRINGS-->
+    <string name="required_sign_out">يتطلب تسجيل الخروج</string>
+    <string name="required_reconnect">هذه العملية حساسة وتتطلب منك إعادة الاتصال.</string>
+
+
+    <!--THIS PART IS RESSET_PASSWORD_ACTIVITY STRINGS-->
+    <string name="resset_psswd">إعادة تعيين كلمة المرور</string>
+    <string name="remember_psswd">تأكد من تذكر كلمة المرور الخاصة بك.</string>
+    <string name="current_psswd">كلمة المرور الحالية</string>
+    <string name="forgot_psswd">هل نسيت كلمة المرور؟</string>
+    <string name="new_psswd">كلمة المرور الجديدة</string>
+    <string name="confirm_psswd">تأكيد كلمة المرور</string>
+    <string name="update_psswd">تحديث كلمة المرور</string>
+    <string name="wrong_psswd">كلمة المرور خاطئة</string>
+    <string name="psswd_not_match">كلمة المرور غير مطابقة</string>
+
+
+    <string name="english">الإنجليزية</string>
+    <string name="frensh">الفرنسية</string>
+    <string name="arabic">العربية</string>
 
 </resources>

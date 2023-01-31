@@ -76,6 +76,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -85,6 +86,7 @@
             android:layout_marginTop="30dp"
             app:boxStrokeColor="@color/blue"
             app:hintTextColor="@color/black"
+            app:helperTextEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -104,12 +106,28 @@
             android:layout_height="wrap_content"
             android:text="@string/save"
             android:backgroundTint="@color/bleu_dark"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center|right"
             app:icon="@drawable/ic_save"
             style="@style/Widget.MaterialComponents.Button.Icon"
 
             />
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:textColor="@color/red"
+            android:padding="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Delete Account"
+            android:backgroundTint="@color/white"
+            />
     </LinearLayout>
+
+
 </ScrollView>

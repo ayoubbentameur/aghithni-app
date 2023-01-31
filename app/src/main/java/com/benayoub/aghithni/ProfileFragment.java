@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.Profile;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -138,6 +139,7 @@ public class ProfileFragment extends Fragment {
                 imageChooser();
             }
         });
+        currentUser=mAuth.getCurrentUser();
         if (currentUser != null) {
 
 
@@ -146,8 +148,11 @@ public class ProfileFragment extends Fragment {
 
 
             getDownloadUrl(reference);
-            String name = currentUser.getDisplayName();
-            fullName.setText(name);
+            FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
+            if(mFirebaseUser != null) {
+                String currentUserID = mFirebaseUser.getDisplayName(); //Do what you need to do with the id
+            fullName.setText(currentUserID);
+            }
         }
         return mContainer;
     }
@@ -166,7 +171,6 @@ public class ProfileFragment extends Fragment {
         //if the user not signed in show a toast & button and a tex explain must to sign in to show the data.
         if (user == null) {
             Toast.makeText(getContext(), R.string.toast_login, Toast.LENGTH_SHORT).show();
-
             LinearLayout linearLayout = mContainer.findViewById(R.id.linearLayout1);
 
 
@@ -187,7 +191,7 @@ public class ProfileFragment extends Fragment {
             text.setLayoutParams(params);
             text.setGravity(Gravity.CENTER);
             text.setText(R.string.dialog_message);
-            text.setTextColor(Color.BLACK);
+            text.setTextColor(text.getContext().getColor(R.color.black));
             text.setTextSize(20);
 
             final int b = 2;
@@ -203,10 +207,10 @@ public class ProfileFragment extends Fragment {
             params2.topMargin = 100;
             // Constant Value of Center gravity: 17 (0x00000011)
             params2.gravity = 17;
+
             button.setLayoutParams(params2);
             button.setTextColor(Color.WHITE);
             button.setText(R.string.signin);
-
 
             button.setBackgroundResource(R.drawable.button_neutral_background);
             button.setOnClickListener(new View.OnClickListener() {
@@ -320,7 +324,7 @@ public class ProfileFragment extends Fragment {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
                 progressDialog.dismiss();
-               // Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -328,40 +332,78 @@ public class ProfileFragment extends Fragment {
 
     private void downloadPic() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //mAuth = FirebaseAuth.getInstance();
+       // currentUser = mAuth.getCurrentUser();
         if (user != null) {
 
             if (user.getPhotoUrl() != null) {
+
+
+
                 for (UserInfo userInfo : user.getProviderData()) {
+
                     if (userInfo.getProviderId().equals("facebook.com")) {
-                        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-                        Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize, dimensionPixelSize);
-                        Glide.with(this).load(profilePictureUri)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+
+                        //int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
+                        // Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
+                        // Glide.with(this).load(profilePictureUri)
+                        //     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        //    .into(avatar);
+
+                        Glide.with(this).load(user.getPhotoUrl())
+                                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                                 .into(avatar);
+
                     }
+
+
                     if (userInfo.getProviderId().equals("google.com")) {
 
 
+                        Glide.with(this).load(user.getPhotoUrl()).into(avatar);
+                    }else {
+
+                        Glide.with(this).load(user.getPhotoUrl()).into(avatar);
+
+                    }
+
+
+                }
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }/*else{
                         mAuth = FirebaseAuth.getInstance();
                         currentUser = mAuth.getCurrentUser();
                         Glide.with(this).load(currentUser.getPhotoUrl()).into(avatar);
 
+                    }*/
 
-                    } else if (user.getPhotoUrl() != null) {
-                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://aghithni-38fd3.appspot.com/images/" + uid + ".jpeg");
-                        Glide.with(this).load(reference)
-                                .placeholder(R.drawable.user_pic)
-                                .into(avatar);
-                    }
 
-                }
+
 
             }
 
-        }
 
-    }
+
+
 
 
     private void getDownloadUrl(StorageReference reference) {
@@ -384,6 +426,14 @@ public class ProfileFragment extends Fragment {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
+
+
+
+
+
+
+
+
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(uri).build();
 
@@ -392,7 +442,7 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                     //   Toast.makeText(getContext(), "Profile image Updated.", Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(getContext(), "Profile image Updated.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -409,18 +459,28 @@ public class ProfileFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                FirebaseUser user = mAuth.getCurrentUser();
-                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if (mAuth.getCurrentUser()!=null){
+
+
+               // FirebaseUser user = mAuth.getCurrentUser();
+                /*String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://aghithni-38fd3.appspot.com/images/" + uid + ".jpeg");
 
 
-                getDownloadUrl(reference);
+                getDownloadUrl(reference);*/
+                    currentUser.reload();
                 swipeRefreshLayout.setRefreshing(false);
 
             }
-        });
+                else {
+                    Toast.makeText(getContext(),"You need to sign in first",Toast.LENGTH_SHORT).show();
 
-    }
+                }
+            }
+
+        });
+        }
+
 
     private void checkPermission() {
 
@@ -436,10 +496,10 @@ public class ProfileFragment extends Fragment {
 
 
 
-            // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-            // app-defined int constant that should be quite unique
+        // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+        // app-defined int constant that should be quite unique
 
-            }
+    }
 
 
 
@@ -460,5 +520,4 @@ imageChooser();
 
             imageChooser();
         }*/
-            }
-
+}

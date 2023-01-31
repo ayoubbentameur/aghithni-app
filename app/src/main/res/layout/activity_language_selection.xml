@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,10 +18,14 @@
                 android:padding="20dp"
                 >
                 <TextView
+                    android:id="@+id/arabic_id"
                     style="@style/viewParent.headerText.settingsTextIcon"
                     android:drawableLeft="@drawable/algeria_flag"
                     android:textSize="23dp"
-                    android:text="Arabic" />
+                    android:textColor="@color/black"
+                    android:text="@string/arabic"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <TableRow
                     android:id="@+id/tr1"
@@ -32,10 +35,14 @@
                     android:background="@color/shadow_color"></TableRow>
 
                 <TextView
+                    android:id="@+id/english_id"
                     style="@style/viewParent.headerText.settingsTextIcon"
                     android:drawableLeft="@drawable/unitedkingdom_flag"
                     android:textSize="23dp"
-                    android:text="English" />
+                    android:textColor="@color/black"
+                    android:text="@string/english"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
 
                 <TableRow
@@ -46,10 +53,14 @@
 
 
                 <TextView
+                    android:id="@+id/frensh_id"
                     style="@style/viewParent.headerText.settingsTextIcon"
                     android:drawableLeft="@drawable/frensh_flag"
                     android:textSize="23dp"
-                    android:text="Frensh" />
+                    android:textColor="@color/black"
+                    android:text="@string/frensh"
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </LinearLayout>
         </ScrollView>

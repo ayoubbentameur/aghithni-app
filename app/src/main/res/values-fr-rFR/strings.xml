@@ -35,6 +35,17 @@
     <string name="login">Connexion</string>
     <string name="dont_have_accnt">Vous n\'avez pas de compte \n inscrivez-vous ici</string>
 
+
+
+
+    <!--THIS PART IS VERIFY_EMAIL_ACTIVITY STRINGS-->
+    <string name="verifyemail">Vérifiez votre adresse e-mail</string>
+    <string name="verifyemail_txt">pour commencer à utiliser Aghithni, nous devons vérifier votre identifiant de messagerie.</string>
+    <string name="verifyemail_spam_txt">Veuillez vérifier votre dossier spam ou courrier indésirable, si vous attendez une réponse et que vous ne la trouvez pas dans votre boîte de réception. Merci.</string>
+    <string name="clicktoverify">Cliquez pour vérifier</string>
+
+
+
     <!--THIS PART IS SIGNUP_ACTIVITY STRINGS-->
     <string name="entr_ur_fllname">Entrez votre nom et prénom</string>
     <string name="entr_ur_usrname">Entrez votre nom d\'utilisateur</string>
@@ -54,6 +65,43 @@
     <string name="signout">Déconnexion</string>
     <string name="dark_mode">Mode Sombre</string>
     <string name="change_psswd">Changer le mot de passe</string>
+
+
+
+    <!--THIS PART IS EditData_ACTIVITY STRINGS-->
+    <string name="email_verified">Email verifié</string>
+    <string name="email_not_verified">e-mail non vérifié</string>
+    <string name="delete_account">Supprimer le compte</string>
     <string name="save">Sauvegarder</string>
 
+
+
+    <!--THIS PART IS DELETE_ACCOUNT_DIALOG STRINGS-->
+    <string name="delete_account_msg">Êtes-vous sûr de vouloir supprimer votre compte?
+Si vous supprimez votre compte, vous serez définitivement
+perdre votre profil, vos messages et vos photos.</string>
+    <string name="delete_account_msg_email_typing">Tapez votre email pour confirmer</string>
+
+    <!--THIS PART IS REQUIRED_SIGNOUT_DIALOG STRINGS-->
+    <string name="required_sign_out">Nécessite une déconnexion</string>
+    <string name="required_reconnect">This operation is sensitive and requires you to reconnect.</string>
+
+
+
+
+    <!--THIS PART IS RESSET_PASSWORD_ACTIVITY STRINGS-->
+    <string name="resset_psswd">Réinitialiser le mot de passe</string>
+    <string name="remember_psswd">Assurez-vous de vous souvenir de votre mot de passe.</string>
+
+    <string name="current_psswd">Mot de passe actuel</string>
+    <string name="forgot_psswd">Requires sign out</string>
+    <string name="new_psswd">Nouveau mot de passe</string>
+    <string name="confirm_psswd">Confirmer le mot de passe</string>
+    <string name="update_psswd">Mettre à jour le mot de passe</string>
+    <string name="wrong_psswd">wrong password</string>
+    <string name="psswd_not_match">passwords do not match</string>
+
+    <string name="english">Anglais</string>
+    <string name="frensh">Français</string>
+    <string name="arabic">Arabe</string>
 </resources>
