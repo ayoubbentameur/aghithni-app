@@ -2,9 +2,6 @@ package com.benayoub.aghithni;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.core.app.ActivityCompat.recreate;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,12 +9,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
-
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -27,15 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
-import java.util.Objects;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
-    public static final String MyPREFERENCES = "MyPrefs" ;
 
     FirebaseUser currentUser;
     private FirebaseAuth mAuth;
@@ -236,11 +227,7 @@ public class SettingsFragment extends Fragment {
         return mContainerSettings;
     }
 
-   /* @Override
-    public void onDestroy() {
-        super.onDestroy();
-        setMode();
-    }*/
+
 
 
     void signOut() {
