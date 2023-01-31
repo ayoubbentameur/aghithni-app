@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/required_sign_out"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/required_reconnect"
+            android:textColor="@color/color_grey"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_dlg_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="@string/fui_cancel" />
+
+            <Button
+                android:id="@+id/signout_dlg_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/red"
+                android:text="@string/signout"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

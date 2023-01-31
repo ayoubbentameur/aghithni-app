@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_account"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_account_msg"
+            android:textColor="@color/color_grey"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_account_msg_email_typing"
+            android:textColor="@color/color_grey"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/blue"
+            android:hint="@string/email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_dlg_id"
+android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_dlg_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="@string/fui_cancel" />
+
+            <Button
+                android:id="@+id/delete_dlg_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/red"
+                android:text="@string/delete_account"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
