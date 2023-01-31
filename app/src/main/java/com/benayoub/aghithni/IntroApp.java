@@ -12,13 +12,15 @@ import java.util.TimerTask;
 
 public class IntroApp extends AppCompatActivity {
     Timer timer;
-SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
+        setContentView(R.layout.activity_intro);
 
-        Boolean theme=sharedPreferences.getBoolean("value",true);
+
+        SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
+
+        boolean theme=sharedPreferences.getBoolean("value",true);
         if (theme){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
