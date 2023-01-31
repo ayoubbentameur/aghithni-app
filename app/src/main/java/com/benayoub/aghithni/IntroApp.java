@@ -17,8 +17,7 @@ SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intro);
-        SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
+        setContentView(R.layout.activity_intro);SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
 
         Boolean theme=sharedPreferences.getBoolean("value",true);
         if (theme){
