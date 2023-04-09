@@ -99,6 +99,15 @@ lose your profile, messages, and photos.</string>
     <string name="english">English</string>
     <string name="frensh">Frensh</string>
     <string name="arabic">Arabic</string>
+    <string name="search">Search</string>
+    <string name="donate">Donate</string>
+    <string name="post">Post</string>
+    <string name="add_picture">Add picture</string>
+    <string name="write_something">Write something</string>
+    <string name="bloodtype_txt">Blood Type:</string>
+    <string name="select_bloodtype_txt">Choose the blood type</string>
+
+
 
 
 </resources>

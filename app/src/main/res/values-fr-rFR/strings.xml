@@ -104,4 +104,12 @@ perdre votre profil, vos messages et vos photos.</string>
     <string name="english">Anglais</string>
     <string name="frensh">Français</string>
     <string name="arabic">Arabe</string>
+    <string name="search">rechercher</string>
+    <string name="donate">Donner</string>
+    <string name="post">Publier</string>
+    <string name="add_picture">Ajouter une photo</string>
+    <string name="write_something">Écris quelque chose</string>
+    <string name="bloodtype_txt">Groupe sanguin:</string>
+    <string name="select_bloodtype_txt">Choisissez le groupe sanguin</string>
+
 </resources>

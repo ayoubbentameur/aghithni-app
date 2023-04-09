@@ -2,16 +2,14 @@ package com.benayoub.aghithni;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.os.Parcel;
+
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
@@ -42,6 +41,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthCredential;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class EditPersonalData extends AppCompatActivity {
     FirebaseUser currentUser;
@@ -161,7 +162,26 @@ public class EditPersonalData extends AppCompatActivity {
     private void deleteAccount() {
       //  reauth();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+// Create a storage reference from our app
+        FirebaseStorage storage=FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        String uid = mAuth.getUid();
+        String path = "images/" + uid + ".jpeg";
+// Create a reference to the file to delete
+        StorageReference desertRef = storageRef.child(path);
 
+// Delete the file
+        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+        });
         user.delete()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddPost">
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/bleu_dark"
+        android:elevation="4dp"
+        android:layoutDirection="ltr"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <Button
+            android:id="@+id/post_btn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/post"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/blue"
+            tools:ignore="RtlHardcoded" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectPic_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:gravity="center"
+            app:iconPadding="8dp"
+            app:iconSize="20dp"
+            android:text="@string/add_picture"
+            app:icon="@drawable/baseline_add_photo_alternate_24"
+            app:iconGravity="textStart"
+            android:textColor="@color/white"
+            app:iconTint="@color/white"
+            android:layout_gravity="right"
+            android:layout_marginEnd="15dp"
+            tools:ignore="RtlHardcoded" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <EditText
+                            android:id="@+id/editTextTextPersonName"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="10dp"
+                            android:background="@null"
+                            android:hint="@string/write_something"
+                            android:inputType="textMultiLine"
+                            android:padding="5dp" />
+                    </LinearLayout>
+                </ScrollView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <com.smarteist.autoimageslider.SliderView
+                            android:id="@+id/imageSlider"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            app:layout_constraintCircleRadius="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:sliderAnimationDuration="600"
+                            app:sliderAutoCycleDirection="back_and_forth"
+                            app:sliderAutoCycleEnabled="false"
+                            app:sliderIndicatorAnimationDuration="600"
+                            app:sliderIndicatorGravity="center_horizontal|bottom"
+                            app:sliderIndicatorMargin="15dp"
+                            app:sliderIndicatorOrientation="horizontal"
+                            app:sliderIndicatorPadding="3dp"
+                            app:sliderIndicatorRadius="2dp"
+                            app:sliderIndicatorSelectedColor="#8E8E8E"
+                            app:sliderIndicatorUnselectedColor="#FFF" >
+
+                    </com.smarteist.autoimageslider.SliderView>
+                    <Button
+                        android:id="@+id/delete_pic_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outlined button"
+                        android:textColor="@color/black"
+                        app:iconTint="@color/red"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        app:icon="@drawable/baseline_delete_outline_24"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="18sp"
+                style="@style/viewParent.headerText"
+                android:text="@string/choose"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layoutDirection="ltr"
+                android:layout_margin="20dp">
+
+                <RadioButton
+                    android:id="@+id/searchRadio_id"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/search"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_baseline_search_24"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/search_unsearch_backround_selector"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/donateRadio_id"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:button="@android:color/transparent"
+                    android:padding="10dp"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@drawable/donate_icon"
+                    android:background="@drawable/donate_undonate_backround_selector"
+                    android:text="@string/donate" />
+            </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layoutDirection="ltr"
+                android:layout_marginBottom="5dp"
+                android:layout_margin="20dp"
+                >
+
+                <RadioButton
+                    android:id="@+id/bloodRadio_id"
+                    android:layout_width="120dp"
+                    android:drawablePadding="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:checkable="true"
+                    android:button="@android:color/transparent"
+                    android:drawableStart="@drawable/_673750_blood_blood_bank_health_healthcare_hospital_icon"
+                   android:background="@drawable/blood_background_selector"
+                    android:padding="10dp"
+                    android:text="@string/blood"
+                    android:focusable="true" />
+
+                <RadioButton
+                    android:id="@+id/medecineRadio_id"
+                    android:layout_width="120dp"
+                    android:layout_marginStart="10dp"
+                    android:drawablePadding="5dp"
+                    android:layout_height="wrap_content"
+                    android:button="@android:color/transparent"
+                    android:drawableStart="@drawable/_075426_color_covid_drug_lineal_medical_icon"
+                    android:background="@drawable/medical_background_selector"
+                    android:padding="10dp"
+                    android:text="@string/medicine" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="18sp"
+                style="@style/viewParent.headerText"
+                android:text="@string/bloodtype_txt"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerBloodType_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:minHeight="48dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

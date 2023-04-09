@@ -2,9 +2,11 @@ package com.benayoub.aghithni;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
@@ -12,10 +14,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -85,18 +90,21 @@ public class SettingsFragment extends Fragment {
         String versionName = BuildConfig.VERSION_NAME;
 
         mContainerSettings = inflater.inflate(R.layout.fragment_settings, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-        SharedPreferences sharedPreferences=getActivity().getSharedPreferences("save",MODE_PRIVATE);
-        setMode();
-       Boolean theme=sharedPreferences.getBoolean("value",true);
-        if (theme){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("save", MODE_PRIVATE);
+            setMode();
+            boolean theme = sharedPreferences.getBoolean("value", true);
+            if (theme) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+            }
+            darkmode.setChecked(sharedPreferences.getBoolean("value", true));
+        }else{
+            setMode();
         }
-        darkmode.setChecked(sharedPreferences.getBoolean("value",true));
-
 
         verify = mContainerSettings.findViewById(R.id.verify_id);
 
@@ -128,7 +136,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 Intent languages = new Intent(getContext(), LanguageSelection.class);
                 startActivity(languages);
-                LocaleListCompat appLocale = LocaleListCompat.forLanguageTags("en");
+
             }
         });
 
@@ -195,15 +203,28 @@ public class SettingsFragment extends Fragment {
 
                         //if the user is signed by google or facebook make change password invisible
 
-                        changePsswd.setVisibility(View.INVISIBLE);
+                       /* changePsswd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Toast.makeText(getContext(), "This function is only available when you are connected with email", Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
+                        changePsswd.setVisibility(View.GONE);
 
                         mAuth = FirebaseAuth.getInstance();
                         currentUser = mAuth.getCurrentUser();
                         Glide.with(this).load(currentUser.getPhotoUrl()).into(avatarSetting);
 
                     } else if (userInfo.getProviderId().equals("google.com")) {
-                        changePsswd.setVisibility(View.INVISIBLE);
+                       /* changePsswd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(getContext(), "This function is only available when you are connected with email", Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
 
+                        changePsswd.setVisibility(View.GONE);
                         Glide.with(this).load(currentUser.getPhotoUrl()).into(avatarSetting);
 
                     } else {
@@ -259,36 +280,52 @@ public class SettingsFragment extends Fragment {
 
 
  void setMode() {
-        darkmode=mContainerSettings.findViewById(R.id.darkModeSwitch);
+     darkmode=mContainerSettings.findViewById(R.id.darkModeSwitch);
+
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+
+         darkmode.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 if (darkmode.isChecked())
+                 {
+                     // When switch checked
+                     SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
+                     editor.putBoolean("value",true);
+                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                     editor.apply();
+                     darkmode.setChecked(true);
+                 }
+                 else
+                 {
+                     // When switch unchecked
+                     SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
+                     editor.putBoolean("value",false);
+                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
 
-
-     darkmode.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-             if (darkmode.isChecked())
-             {
-                 // When switch checked
-                 SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
-                 editor.putBoolean("value",true);
-                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-                 editor.apply();
-                 darkmode.setChecked(true);
+                     editor.apply();
+                     darkmode.setChecked(false);
+                 }
              }
-             else
-             {
-                 // When switch unchecked
-                 SharedPreferences.Editor editor=getActivity().getSharedPreferences("save",MODE_PRIVATE).edit();
-                 editor.putBoolean("value",false);
-                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+         });
 
+     }else {
+         darkmode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+             @Override
+             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                 if (darkmode.isChecked()){
+                     Toast.makeText(getActivity(), "Dark Mode is not supported for this android version", Toast.LENGTH_SHORT).show();
 
-                 editor.apply();
-                 darkmode.setChecked(false);
+                 }
              }
-         }
-     });
+         });
+
+     }
+
+
+
           }
 }
 

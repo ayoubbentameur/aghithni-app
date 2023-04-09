@@ -21,7 +21,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -42,10 +47,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.login.LoginResult;
 import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -54,6 +64,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,15 +77,17 @@ import java.io.InputStream;
  */
 public class ProfileFragment extends Fragment {
 
+    private static final int CAMERA_REQ_CODE = 8857;
+    private static final int REQUEST_PERMISSION = 789;
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     ImageView avatar;
     TextView fullName;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressDialog progressDialog;
-
-
     private final int SELECT_PICTURE = 200;
+    private static final int PERMISSION_REQUEST_CODE = 123;
+    ActivityResultLauncher<String> mGetContent;
 
 
     //making mContainer Public for reuse it in the checkSignin() method.
@@ -131,14 +145,46 @@ public class ProfileFragment extends Fragment {
         checkSignin();
         downloadPic();
         refresh();
-        checkPermission();
 
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ActivityCompat.checkSelfPermission(getContext(),Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    // Should we show an explanation?
+                    if (shouldShowRequestPermissionRationale(
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        // Explain to the user why we need to read the contacts
+                    }
+
+                    int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE=8888;
+                    requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                    // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                    // app-defined int constant that should be quite unique
+
+                    return;
+                }
                 imageChooser();
+
+
             }
         });
+
+
+
+        mGetContent=registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                Intent intent=new Intent(getContext(),UCropActivity.class);
+                intent.putExtra("DATA",result.toString());
+                startActivityForResult(intent,101);
+
+            }
+        });
+
         currentUser=mAuth.getCurrentUser();
         if (currentUser != null) {
 
@@ -235,42 +281,42 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
     // this function is triggered when
     // the Select Image Button is clicked
     void imageChooser() {
         // create an instance of the
         // intent of the type image
-        Intent i = new Intent();
+
+      /*  Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
 
         // pass the constant to compare it
         // with the returned requestCode
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);*/
+        mGetContent.launch("image/*");
+
+
     }
+
+
+
 
     // this function is triggered when user
     // selects the image from the imageChooser
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == SELECT_PICTURE) {
-                // Get the url of the image from data
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    avatar.setImageURI(selectedImageUri);
-                    upload();
-                }
+        if (resultCode==-1 && requestCode==101){
+            String result=data.getStringExtra("RESULT");
+            Uri resultUri=null;
+            if (result!=null){
+                resultUri=Uri.parse(result);
             }
+            avatar.setImageURI(resultUri);
+            upload();
         }
     }
-
 
     private void upload() {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -340,21 +386,26 @@ public class ProfileFragment extends Fragment {
 
 
 
+
                 for (UserInfo userInfo : user.getProviderData()) {
 
-                    if (userInfo.getProviderId().equals("facebook.com")) {
+                   if (FacebookAuthProvider.PROVIDER_ID.equals(userInfo.getProviderId())) {
 
-                        //int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-                        // Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(200, 200);
-                        // Glide.with(this).load(profilePictureUri)
-                        //     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        //    .into(avatar);
 
-                        Glide.with(this).load(user.getPhotoUrl())
-                                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                                .into(avatar);
 
-                    }
+                 Glide.with(this).load(R.drawable.user_pic)
+
+                         .into(avatar);
+
+
+
+                }
+
+
+
+
+
+
 
 
                     if (userInfo.getProviderId().equals("google.com")) {
@@ -366,29 +417,9 @@ public class ProfileFragment extends Fragment {
                         Glide.with(this).load(user.getPhotoUrl()).into(avatar);
 
                     }
-
-
                 }
 
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     }/*else{
                         mAuth = FirebaseAuth.getInstance();
                         currentUser = mAuth.getCurrentUser();
@@ -400,11 +431,6 @@ public class ProfileFragment extends Fragment {
 
 
             }
-
-
-
-
-
 
     private void getDownloadUrl(StorageReference reference) {
         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -424,15 +450,6 @@ public class ProfileFragment extends Fragment {
     private void setUserProfileUrl(Uri uri) {
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-
-
-
-
-
-
-
-
 
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(uri).build();
@@ -481,43 +498,17 @@ public class ProfileFragment extends Fragment {
         });
         }
 
-
-    private void checkPermission() {
-
-
-        //use permission to READ_EXTERNAL_STORAGE For Device >= Marshmallow
-
-        String[] permissionsStorage = {Manifest.permission.READ_EXTERNAL_STORAGE};
-        int requestExternalStorage = 1;
-        int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), permissionsStorage, requestExternalStorage);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // permission granted
+            } else {
+                // permission denied
+            }
         }
-
-
-
-        // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-        // app-defined int constant that should be quite unique
-
     }
 
 
-
-        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getActivity(),"permissionDenied", Toast.LENGTH_LONG).show();
-
-                // to ask user to reade external storage
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 444);
-
-            } else {
-imageChooser();
-            }
-
-            //implement code for device < Marshmallow
-        } else {
-
-            imageChooser();
-        }*/
 }

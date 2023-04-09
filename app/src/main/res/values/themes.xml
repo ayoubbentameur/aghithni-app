@@ -209,4 +209,12 @@
     <style name="viewParent.headerText.settingsTextIcon" parent="settingsText">
         <item name="android:drawableRight">@drawable/ic_more</item>
     </style>
+
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
 </resources>

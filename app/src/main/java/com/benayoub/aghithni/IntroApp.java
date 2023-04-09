@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import java.util.Locale;
@@ -45,16 +46,17 @@ public class IntroApp extends AppCompatActivity {
 
         setContentView(R.layout.activity_intro);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-        SharedPreferences sharedPreferences=getSharedPreferences("save",MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("save", MODE_PRIVATE);
 
-        boolean theme=sharedPreferences.getBoolean("value",true);
-        if (theme){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            boolean theme = sharedPreferences.getBoolean("value", true);
+            if (theme) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
         }
-
 
         timer=new Timer();
         timer.schedule(new TimerTask() {

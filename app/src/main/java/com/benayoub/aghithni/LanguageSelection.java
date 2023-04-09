@@ -34,6 +34,7 @@ public class LanguageSelection extends AppCompatActivity {
                 editor.putString("language","ar");
                 editor.apply();
                 setLocale("ar");
+                restartActivity();
             });
 
             english.setOnClickListener(view -> {
@@ -41,6 +42,7 @@ public class LanguageSelection extends AppCompatActivity {
                 editor.putString("language","en");
                 editor.apply();
                 setLocale("en");
+                restartActivity();
             });
 
             frensh.setOnClickListener(view -> {
@@ -48,6 +50,7 @@ public class LanguageSelection extends AppCompatActivity {
                 editor.putString("language","fr");
                 editor.apply();
                 setLocale("fr");
+                restartActivity();
             });
     }
 
@@ -58,9 +61,14 @@ public class LanguageSelection extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, DashboardActivity.class);
+        /*Intent refresh = new Intent(this, DashboardActivity.class);
         finish();
-        startActivity(refresh);
+        startActivity(refresh);*/
     }
+public void restartActivity(){
+    Intent intent = new Intent(this, Choose.class);
+    finish();
+    startActivity(intent);
 
+}
 }

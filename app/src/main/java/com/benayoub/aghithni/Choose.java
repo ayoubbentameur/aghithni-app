@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +20,11 @@ public class Choose extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
         blood=findViewById(R.id.CardView_blood_id);
- medical=findViewById(R.id.CardView_medical_id);
+        medical=findViewById(R.id.CardView_medical_id);
 
-    blood.setOnClickListener(new View.OnClickListener() {
+
+
+        blood.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intentBlood=new Intent(Choose.this,DashboardActivity.class);
@@ -29,7 +32,7 @@ public class Choose extends AppCompatActivity {
         }
     });
 
-    medical.setOnClickListener(new View.OnClickListener() {
+         medical.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intnetMedical=new Intent(Choose.this,DashboardActivity.class);

@@ -32,7 +32,7 @@
                     android:id="@+id/profileCircleImageView"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    app:civ_border_width="2dp"
+                    app:civ_border_width="1dp"
                     app:civ_border_color="@color/blue"
                     android:layoutDirection="rtl"
                     android:layout_marginTop="15dp"
@@ -57,7 +57,6 @@
                     android:textColor="@color/color_grey"
                     android:layout_below="@id/usernameTextView"
                     android:layoutDirection="ltr"
-
                     android:layout_toRightOf="@id/profileCircleImageView"/>
                 <TextView
                     android:id="@+id/verify_id"
@@ -69,7 +68,6 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="5dp"
                     android:layoutDirection="ltr"
-
                     android:layout_toRightOf="@id/profileCircleImageView"/>
 
 
@@ -84,7 +82,8 @@
                 android:layoutDirection="ltr"
                 android:minHeight="48dp"
                 android:textColor="@color/black"
-                android:text="@string/dark_mode" />
+                android:text="@string/dark_mode"
+                 />
 
             <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"
