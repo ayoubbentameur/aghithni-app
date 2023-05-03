@@ -7,8 +7,6 @@
     android:orientation="vertical"
     tools:context=".AddPost">
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -65,7 +63,7 @@
                 android:orientation="vertical">
 
 
-                <ScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -84,7 +82,7 @@
                             android:inputType="textMultiLine"
                             android:padding="5dp" />
                     </LinearLayout>
-                </ScrollView>
+                </androidx.core.widget.NestedScrollView>
 
 
                 <LinearLayout
@@ -119,7 +117,7 @@
                         android:id="@+id/delete_pic_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Outlined button"
+                        android:text="@string/delete_pics_btn"
                         android:textColor="@color/black"
                         app:iconTint="@color/red"
                         android:layout_gravity="center"
@@ -131,7 +129,52 @@
 
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="18sp"
+                style="@style/viewParent.headerText"
+                android:text="@string/wilaya" />
 
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E1E1E1"
+                android:minHeight="48dp"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="18sp"
+                style="@style/viewParent.headerText"
+                android:text="@string/commune" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="#E1E1E1"
+                android:minHeight="48dp"/>
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
@@ -144,7 +187,7 @@
                 style="@style/viewParent.headerText"
                 android:text="@string/choose"
                 />
-
+        <!--
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -177,48 +220,94 @@
                     android:background="@drawable/donate_undonate_backround_selector"
                     android:text="@string/donate" />
             </RadioGroup>
-            <RadioGroup
-                android:id="@+id/radio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
+
+            -->
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layoutDirection="ltr"
-                android:layout_marginBottom="5dp"
-                android:layout_margin="20dp"
-                >
+                app:singleSelection="true"
+                android:layout_gravity="center"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:singleLine="true"
+                android:layout_margin="20dp">
 
-                <RadioButton
-                    android:id="@+id/bloodRadio_id"
-                    android:layout_width="120dp"
-                    android:drawablePadding="5dp"
+                <!-- Chips can be declared here, or added dynamically. -->
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/searchChip_id"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search"
+                    app:chipIcon="@drawable/ic_baseline_search_24"
+                    android:elevation="8dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:checkable="true"
-                    android:button="@android:color/transparent"
-                    android:drawableStart="@drawable/_673750_blood_blood_bank_health_healthcare_hospital_icon"
-                   android:background="@drawable/blood_background_selector"
                     android:padding="10dp"
-                    android:text="@string/blood"
-                    android:focusable="true" />
-
-                <RadioButton
-                    android:id="@+id/medecineRadio_id"
-                    android:layout_width="120dp"
+                    android:background="@drawable/search_unsearch_backround_selector"
+                    />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/donateChip_id"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/donate"
                     android:layout_marginStart="10dp"
-                    android:drawablePadding="5dp"
-                    android:layout_height="wrap_content"
-                    android:button="@android:color/transparent"
-                    android:drawableStart="@drawable/_075426_color_covid_drug_lineal_medical_icon"
-                    android:background="@drawable/medical_background_selector"
+                    app:chipIcon="@drawable/donate_icon"
+                    android:elevation="8dp"
+                    android:layout_marginEnd="10dp"
                     android:padding="10dp"
-                    android:text="@string/medicine" />
+                    android:background="@drawable/donate_undonate_backround_selector"
+                    />
+            </com.google.android.material.chip.ChipGroup>
 
-            </RadioGroup>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="ltr"
+                app:singleSelection="true"
+                android:layout_gravity="center"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                app:singleLine="true"
+                android:layout_margin="20dp">
 
+                <!-- Chips can be declared here, or added dynamically. -->
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/bloodChip_id"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    app:chipIconVisible="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blood"
+                    app:iconStartPadding="10dp"
+                    app:chipIcon="@drawable/_673750_blood_blood_bank_health_healthcare_hospital_icon"
+                    android:elevation="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/search_unsearch_backround_selector"
+                    />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/medecineChip_id"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medicine"
+                    android:layout_marginStart="10dp"
+                    app:chipIcon="@drawable/medical_choose"
+                    android:elevation="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:background="@drawable/donate_undonate_backround_selector"
+                    />
+            </com.google.android.material.chip.ChipGroup>
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/txtBloodType_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -229,7 +318,6 @@
                 style="@style/viewParent.headerText"
                 android:text="@string/bloodtype_txt"
                 />
-
             <Spinner
                 android:id="@+id/spinnerBloodType_id"
                 android:layout_width="match_parent"
@@ -238,9 +326,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="20dp"
+                android:background="#E1E1E1"
                 android:minHeight="48dp" />
+
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

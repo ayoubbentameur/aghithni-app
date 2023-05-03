@@ -106,8 +106,9 @@ lose your profile, messages, and photos.</string>
     <string name="write_something">Write something</string>
     <string name="bloodtype_txt">Blood Type:</string>
     <string name="select_bloodtype_txt">Choose the blood type</string>
-
-
+    <string name="delete_pics_btn">Delete the current picture</string>
+    <string name="wilaya">The state</string>
+    <string name="commune">The town</string>
 
 
 </resources>

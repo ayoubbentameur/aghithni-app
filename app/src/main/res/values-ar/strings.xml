@@ -107,6 +107,9 @@
     <string name="write_something">أكتب شيئا</string>
     <string name="bloodtype_txt">فصيلة الدم:</string>
     <string name="select_bloodtype_txt">اختر فصيلة الدم</string>
+    <string name="delete_pics_btn">Delete the current picture</string>
+    <string name="wilaya">الولاية</string>
+    <string name="commune">البلدية</string>
 
 
 </resources>

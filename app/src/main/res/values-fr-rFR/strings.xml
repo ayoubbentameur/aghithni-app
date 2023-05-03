@@ -111,5 +111,8 @@ perdre votre profil, vos messages et vos photos.</string>
     <string name="write_something">Écris quelque chose</string>
     <string name="bloodtype_txt">Groupe sanguin:</string>
     <string name="select_bloodtype_txt">Choisissez le groupe sanguin</string>
+    <string name="delete_pics_btn">Delete the current picture</string>
+    <string name="wilaya">L\'état</string>
+    <string name="commune">la commune</string>
 
 </resources>
