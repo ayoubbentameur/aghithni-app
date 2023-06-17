@@ -109,6 +109,11 @@ lose your profile, messages, and photos.</string>
     <string name="delete_pics_btn">Delete the current picture</string>
     <string name="wilaya">The state</string>
     <string name="commune">The town</string>
+    <string name="add_your_phone_number">Add your phone number</string>
+    <string name="add_phone_number_desc">Add your phone number for easy contact with you.</string>
+    <string name="type_number">Type your number</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm">Confirm</string>
 
 
 </resources>

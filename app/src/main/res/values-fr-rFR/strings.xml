@@ -114,5 +114,10 @@ perdre votre profil, vos messages et vos photos.</string>
     <string name="delete_pics_btn">Delete the current picture</string>
     <string name="wilaya">L\'état</string>
     <string name="commune">la commune</string>
+    <string name="add_your_phone_number">Ajoutez votre numéro de téléphone</string>
+    <string name="add_phone_number_desc">Ajoutez votre numéro de téléphone pour un contact facile avec vous.</string>
+    <string name="type_number">Tapez votre numéro</string>
+    <string name="phone_number">numéro de téléphone</string>
+    <string name="confirm">Confirmer</string>
 
 </resources>

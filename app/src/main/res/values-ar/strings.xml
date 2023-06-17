@@ -110,6 +110,11 @@
     <string name="delete_pics_btn">Delete the current picture</string>
     <string name="wilaya">الولاية</string>
     <string name="commune">البلدية</string>
+    <string name="add_your_phone_number">أضف رقم هاتفك</string>
+    <string name="add_phone_number_desc">أضف رقم هاتفك للتواصل معك بسهولة.</string>
+    <string name="type_number">اكتب رقمك</string>
+    <string name="phone_number">رقم هاتفك</string>
+    <string name="confirm">تأكيد</string>
 
 
 </resources>
